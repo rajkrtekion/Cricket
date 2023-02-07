@@ -6,15 +6,21 @@ public class Match {
     private Team team2;
     private String team1Name;
     private String team2Name;
-    private int overs;
-    Match(String name1,String name2, int overs)
+    final private int overs;
+    final private int noOfPlayers;
+    private Game game;
+
+    Match(String name1,String name2, int overs,int noOfPlayers)
     {
         this.team1Name=name1;
         this.team2Name=name2;
         this.overs=overs;
+        this.noOfPlayers=noOfPlayers;
 
-        team1=new Team(team1Name,overs);
-        team2=new Team(team2Name,overs);
+        game=new Game(overs,noOfPlayers);
+
+        team1=new Team(team1Name,noOfPlayers);
+        team2=new Team(team2Name,noOfPlayers);
     }
 
     public void setTeams() {
@@ -22,8 +28,7 @@ public class Match {
         team2.setTeam();
     }
 
-    public void Toss(){
-        System.out.print("TOSS: ");
+    public void Toss() throws Exception{
         int tossVal=(int)(Math.random()*2);
         tossVal=1;
         if(tossVal==1){
@@ -34,37 +39,33 @@ public class Match {
             team1Name=team1.getTeamName();
             team2Name=team2.getTeamName();
         }
-        System.out.println(team1Name+" won the toss.");
+        TimeUnit.MILLISECONDS.sleep(1000);
+        System.out.println("\nThe Match Between : "+team1Name +" and "+ team2Name);
+        TimeUnit.MILLISECONDS.sleep(400);
+
+        System.out.println("TOSS: "+team1Name+" won the toss.\n");
+        TimeUnit.MILLISECONDS.sleep(400);
 
     }
 
     public void play() {
-        team1.playGame(Integer.MAX_VALUE);
 
-        team2.playGame(team1.getScore());
+        game.playGame(team1,Integer.MAX_VALUE);
+        game.playGame(team2,team1.getScore());
 
 
     }
 
     public void displayResult() throws InterruptedException{
-
-        TimeUnit.MILLISECONDS.sleep(1000);
-        System.out.println("\nThe Match Between : "+team1Name +" and "+ team2Name+'\n');
+        game.displayScoreCard(team1);
+        TimeUnit.MILLISECONDS.sleep(400);
+        game.displayScoreCard(team2);
         TimeUnit.MILLISECONDS.sleep(400);
 
-
-        team1.displayScoreCard();
+        game.displayScore(team1);
         TimeUnit.MILLISECONDS.sleep(400);
-        team2.displayScoreCard();
+        game.displayScore(team2);
         TimeUnit.MILLISECONDS.sleep(400);
-
-
-
-        System.out.println(team1Name+" : "+ team1.getScore()+"/"+team1.getWickets() +"   Overs : "+team1.getOver()+"."+team1.getBalls());
-        TimeUnit.MILLISECONDS.sleep(400);
-        System.out.println(team2Name+" : "+ team2.getScore()+"/"+team2.getWickets() +"   Overs : "+team2.getOver()+"."+team2.getBalls());
-        TimeUnit.MILLISECONDS.sleep(400);
-
 
         String winner;
         if(team1.getScore()==team2.getScore())

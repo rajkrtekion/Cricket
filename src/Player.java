@@ -1,8 +1,7 @@
 import java.util.*;
 public class Player {
     private String name;
-    private boolean batsman;
-    private boolean baller;
+    private int playerType;  // 0-> Batsman, 1->Baller
     int runs=0;
     int balls=0;
 
@@ -15,12 +14,7 @@ public class Player {
     public void setName(String name){
         this.name=name;
     }
-    public void setBatsman(boolean x){
-        batsman=x;
-    }
-    public void setBaller(boolean x){
-        baller=x;
-    }
+    public void setPlayerType(int playerType){this.playerType=playerType;}
     public void addRuns(int run)
     {
         this.runs+=run;
@@ -31,10 +25,9 @@ public class Player {
     }
 
     public String getName() { return name; }
-    public boolean isBatsman() { return batsman; }
-    public boolean isBaller() { return baller; }
     public int getRuns() { return runs; };
     public int getBalls() { return balls;};
+    public int getPlayerType(){return playerType;}
 
 
 
